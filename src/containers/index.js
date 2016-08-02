@@ -1,33 +1,47 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { fetchPosts } from '../actions/index.js';
 
-const Index = (props) => {
-  const posts = [
-    { id: 'test_id', title: 'test_title', tags: 'test_tag' },
-    { id: 'another_test_id', title: 'another_test_title', tags: 'another_test_tag' },
-  ];
+class Index extends Component {
 
-  const postList = posts.map((post) => {
-    return <li key={post.id}><Link to={`posts/${post.id}`}>{`${post.title} ${post.tags}`}</Link></li>;
-  });
+  constructor(props) {
+    super(props);
 
-  return (
-    <ul>
-      {postList}
-    </ul>
-  );
-};
+    this.renderPostList = this.renderPostList.bind(this);
+  }
 
-// not currently working with reducer, also using a fake set of posts
+  componentWillMount() {
+    this.props.fetchPosts();
+  }
 
-// const mapStateToProps = (state) => (
-//   {
-//     posts: state.posts.all,
-//   }
-// );
-//
-// // react-redux glue -- outputs Container that know state in props
-// export default connect(mapStateToProps, null)(Index);
+  renderPostList() {
+    if (this.props.posts != null) {
+      return this.props.posts.map((post) => {
+        return <li key={post.id}><Link to={`posts/${post.id}`}>{`${post.title} ${post.tags}`}</Link></li>;
+      });
+    } else {
+      console.log('entered else of renderPostList');
+      return <div></div>;
+    }
+  }
 
-export default Index;
+  render() {
+    return (
+      <ul>
+        {this.renderPostList()}
+      </ul>
+    );
+  }
+}
+
+
+const mapStateToProps = (state) => (
+  {
+    posts: state.posts.all,
+    curr_post: state.posts.post,
+  }
+);
+
+// react-redux glue
+export default connect(mapStateToProps, { fetchPosts })(Index);

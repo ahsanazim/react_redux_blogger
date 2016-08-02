@@ -15,3 +15,16 @@ nav {
   background: white;
   list-style-type: none;
 }
+
+.new {
+  display: flex;
+  flex-flow: column nowrap;
+  .textEntry {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+  .buttons {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+}

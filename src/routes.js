@@ -3,8 +3,8 @@ import { Route, IndexRoute } from 'react-router';
 
 import App from './components/app.js';
 import Index from './containers/index.js';
-import Show from './components/show.js';
-import New from './components/new.js';
+import Show from './containers/show.js';
+import New from './containers/new.js';
 
 
 export default(
