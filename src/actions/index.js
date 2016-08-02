@@ -30,9 +30,11 @@ export function fetchPost(id) {
     axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`)
     .then(response => {
       dispatch({ type: 'FETCH_POST', payload: { post: response.data } });
+      console.log('FETCHEDDDDDDDDDDDDD');
+      console.log(response.data);
     })
     .catch(error => {
-
+      console.log('error in fetchPost()');
     });
   };
 }
@@ -49,14 +51,16 @@ export function createPost(props) {
   };
 }
 
-export function updatePost(post) {
+export function updatePost(id, post) {
   return (dispatch) => {
     const updatedPost = { title: post.title, tags: post.tags, content: post.content };
-
-    axios.put(`${ROOT_URL}/posts/${post.id}${API_KEY}`, updatedPost)
+    console.log(updatedPost);
+    axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, updatedPost)
     .then(response => {
-
-
+      console.log('in updating then clause');
+      console.log(`url accessed during update: ${ROOT_URL}/posts/${id}${API_KEY}, ${response.data}`);
+      console.log('going from update to fetch');
+      dispatch(fetchPost(id));
     })
     .catch(error => {
 

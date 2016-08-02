@@ -1,39 +1,151 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import marked from 'marked';
+import Textarea from 'react-textarea-autosize';
 import { deletePost, updatePost, fetchPost } from '../actions/index.js';
+
+// todo:
+// fix size of what gets blurred (clicking on textarea vs div)
 
 class Show extends Component {
 
   constructor(props) {
     super(props);
 
-    this.renderPost = this.renderPost.bind(this);
+    this.state = { titleEditing: false,
+                   tagsEditing: false,
+                   contentEditing: false,
+                   locTitle: '',
+                   locTags: '',
+                   locContent: '',
+                                       };
+
+    this.renderTitle = this.renderTitle.bind(this);
+    this.renderTags = this.renderTags.bind(this);
+    this.renderContent = this.renderContent.bind(this);
+    this.updateText = this.updateText.bind(this);
+    this.blur = this.blur.bind(this);
   }
 
   componentWillMount() {
-    console.log('entered componentWillMount of Show class');
-    console.log(this.props.params.id);
     this.props.fetchPost(this.props.params.id);
   }
 
-  renderPost() {
+  updateText(newText, section) {
+    switch (section) {
+      case 'title':
+        this.props.updatePost(this.props.params.id,
+          { title: newText, tags: this.props.curr_post.tags, content: this.props.curr_post.content }
+        );
+        break;
+      case 'tags':
+        this.props.updatePost(this.props.params.id,
+          { title: this.props.curr_post.title, tags: newText, content: this.props.curr_post.content }
+        );
+        break;
+      case 'content':
+        this.props.updatePost(this.props.params.id,
+          { title: this.props.curr_post.title, tags: this.props.curr_post.tags, content: newText }
+        );
+        break;
+      default:
+        break;
+    }
+  }
+
+  blur(section) {
+    switch (section) {
+      case 'title':
+        this.setState({ titleEditing: !this.state.titleEditing });
+        this.updateText(this.state.locTitle, 'title');
+        break;
+      case 'tags':
+        this.setState({ tagsEditing: !this.state.tagsEditing });
+        this.updateText(this.state.locTags, 'tags');
+        break;
+      case 'content':
+        this.setState({ contentEditing: !this.state.contentEditing });
+        this.updateText(this.state.locContent, 'content');
+        break;
+      default:
+        break;
+    }
+  }
+
+  renderTitle() {
     if (this.props.curr_post != null) {
-      return (
-        <div>
-          <div>{this.props.curr_post.title}</div>
-          <div>{this.props.curr_post.tags}</div>
-          <div>{this.props.curr_post.content}</div>
-        </div>
-      );
+      if (this.state.titleEditing) {
+        return (
+          <div>
+            <Textarea
+              defaultValue={this.props.curr_post.title}
+              onBlur={() => this.blur('title')}
+              onChange={(event) => this.setState({ locTitle: event.target.value })}
+            />
+          </div>
+        );
+      } else {
+        return (
+          <div onClick={() => this.setState({ titleEditing: !this.state.titleEditing })}
+            dangerouslySetInnerHTML={{ __html: marked(this.props.curr_post.title || '') }}
+          />
+        );
+      }
     } else {
-      return <div></div>;
+      return <div>loading</div>;
+    }
+  }
+
+  renderTags() {
+    if (this.props.curr_post != null) {
+      if (this.state.tagsEditing) {
+        return (
+          <div>
+            <Textarea
+              defaultValue={this.props.curr_post.tags}
+              onBlur={() => this.blur('tags')}
+              onChange={(event) => this.setState({ locTags: event.target.value })}
+            />
+          </div>
+        );
+      } else {
+        return (
+          <div onClick={() => this.setState({ tagsEditing: !this.state.tagsEditing })}
+            dangerouslySetInnerHTML={{ __html: marked(this.props.curr_post.tags || '') }}
+          />
+        );
+      }
+    } else {
+      return <div>loading</div>;
+    }
+  }
+
+  renderContent() {
+    if (this.props.curr_post != null) {
+      if (this.state.contentEditing) {
+        return (
+          <div>
+            <Textarea
+              defaultValue={this.props.curr_post.content}
+              onBlur={() => this.blur('content')}
+              onChange={(event) => this.setState({ locContent: event.target.value })}
+            />
+          </div>
+        );
+      } else {
+        return (
+          <div onClick={() => this.setState({ contentEditing: !this.state.contentEditing })}
+            dangerouslySetInnerHTML={{ __html: marked(this.props.curr_post.content || '') }}
+          />
+        );
+      }
+    } else {
+      return <div>loading</div>;
     }
   }
 
   render() {
-    console.log(`from render function: ${this.props.curr_post}`);
-    console.log(this.props.curr_post);
     return (
       <div>
         <div>
@@ -42,7 +154,11 @@ class Show extends Component {
             delete
           </button>
         </div>
-       {this.renderPost()}
+        <div>
+          <div>{this.renderTitle()}</div>
+          <div>{this.renderTags()}</div>
+          <div>{this.renderContent()}</div>
+        </div>
       </div>
     );
   }
