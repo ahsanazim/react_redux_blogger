@@ -1,20 +1,93 @@
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Oswald', sans-serif;
   color: rgb(10%, 10%, 10%);
-  background: darken(white, 10%);
+  background: white;
   margin: 50px;
+  margin-left: 0px;
+  margin-right: 0px;
   font-size: 16px;
 }
 
+a {
+  color: black;
+  text-decoration: none;
+  border: none;
+}
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+    background-color: white;
+}
 
 nav {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  border: 1px black;
+  align-items: baseline;
   background: white;
   list-style-type: none;
+  margin-bottom: 10px;
+  font-size: 50px;
+  border-bottom: solid black 10px;
+  * {
+    padding-bottom: 50px;
+    position: relative;
+    margin-right: 30px;
+  }
+  li:first-child {
+    font-size: 120px;
+    margin-left: 70px;
+  }
+
+  a:hover {
+    border-bottom: double white 10px;
+    color: white;
+    background-color: black;
+  }
+
+  a:active {
+      text-decoration: none;
+  }
 }
+
+#indexPostList {
+  background: darken(white, 10%);
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+
+  li:first-child {
+    margin-top: 70px;
+  }
+}
+
+
+#indexPostList li {
+  font-family: 'Lora', serif;
+  padding: 8px;
+  list-style-type: none;
+  color: black;
+  border: outset white;
+  border-width: 2px 2px 2px 2px;
+  margin: 3px 3px;
+  background-color: white;
+  margin: 8px;
+  opacity:0.5;
+}
+
+#indexPostList li:hover {
+  opacity: 1;
+}
+
 
 .new {
   display: flex;
@@ -26,5 +99,23 @@ nav {
   .buttons {
     display: flex;
     flex-flow: row nowrap;
+  }
+}
+
+.show {
+  font-family: 'Lora', serif;
+  display: flex;
+  flex-flow: column nowrap;
+  .showHeader {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+  .showText {
+    display: flex;
+    flex-flow: column nowrap;
+    .textItem {
+
+    }
   }
 }

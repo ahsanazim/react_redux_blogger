@@ -18,8 +18,7 @@ class Show extends Component {
                    contentEditing: false,
                    locTitle: '',
                    locTags: '',
-                   locContent: '',
-                                       };
+                   locContent: '' };
 
     this.renderTitle = this.renderTitle.bind(this);
     this.renderTags = this.renderTags.bind(this);
@@ -33,40 +32,41 @@ class Show extends Component {
   }
 
   updateText(newText, section) {
+    let titleText = this.props.curr_post.title;
+    let tagsText = this.props.curr_post.tags;
+    let contentText = this.props.curr_post.content;
     switch (section) {
       case 'title':
-        this.props.updatePost(this.props.params.id,
-          { title: newText, tags: this.props.curr_post.tags, content: this.props.curr_post.content }
-        );
+        titleText = newText;
         break;
       case 'tags':
-        this.props.updatePost(this.props.params.id,
-          { title: this.props.curr_post.title, tags: newText, content: this.props.curr_post.content }
-        );
+        tagsText = newText;
         break;
       case 'content':
-        this.props.updatePost(this.props.params.id,
-          { title: this.props.curr_post.title, tags: this.props.curr_post.tags, content: newText }
-        );
+        contentText = newText;
         break;
       default:
         break;
     }
+
+    this.props.updatePost(this.props.params.id,
+      { title: titleText, tags: tagsText, content: contentText }
+    );
   }
 
   blur(section) {
     switch (section) {
       case 'title':
-        this.setState({ titleEditing: !this.state.titleEditing });
         this.updateText(this.state.locTitle, 'title');
+        this.setState({ titleEditing: !this.state.titleEditing });
         break;
       case 'tags':
-        this.setState({ tagsEditing: !this.state.tagsEditing });
         this.updateText(this.state.locTags, 'tags');
+        this.setState({ tagsEditing: !this.state.tagsEditing, first: !this.state.first });
         break;
       case 'content':
-        this.setState({ contentEditing: !this.state.contentEditing });
         this.updateText(this.state.locContent, 'content');
+        this.setState({ contentEditing: !this.state.contentEditing });
         break;
       default:
         break;
@@ -147,17 +147,17 @@ class Show extends Component {
 
   render() {
     return (
-      <div>
-        <div>
+      <div className="show">
+        <div className="showHeader">
           <Link to="/"><span>back to index page</span></Link>
           <button onClick={() => this.props.deletePost(this.props.params.id)}>
             delete
           </button>
         </div>
-        <div>
-          <div>{this.renderTitle()}</div>
-          <div>{this.renderTags()}</div>
-          <div>{this.renderContent()}</div>
+        <div className="showText">
+          <div className="textSection">{this.renderTitle()}</div>
+          <div className="textSection">{this.renderTags()}</div>
+          <div className="textSection">{this.renderContent()}</div>
         </div>
       </div>
     );

@@ -21,14 +21,13 @@ class Index extends Component {
         return <li key={post.id}><Link to={`posts/${post.id}`}>{`${post.title} ${post.tags}`}</Link></li>;
       });
     } else {
-      console.log('entered else of renderPostList');
       return <div></div>;
     }
   }
 
   render() {
     return (
-      <ul>
+      <ul id="indexPostList">
         {this.renderPostList()}
       </ul>
     );
