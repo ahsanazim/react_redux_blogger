@@ -5,9 +5,6 @@ import marked from 'marked';
 import Textarea from 'react-textarea-autosize';
 import { deletePost, updatePost, fetchPost } from '../actions/index.js';
 
-// todo:
-// fix size of what gets blurred (clicking on textarea vs div)
-
 class Show extends Component {
 
   constructor(props) {
@@ -25,6 +22,7 @@ class Show extends Component {
     this.renderContent = this.renderContent.bind(this);
     this.updateText = this.updateText.bind(this);
     this.blur = this.blur.bind(this);
+    this.focus = this.focus.bind(this);
   }
 
   componentWillMount() {
@@ -73,13 +71,20 @@ class Show extends Component {
     }
   }
 
+  focus(input) {
+    if (input != null) {
+      input.focus();
+    }
+  }
+
   renderTitle() {
     if (this.props.curr_post != null) {
       if (this.state.titleEditing) {
         return (
           <div>
-            <Textarea
+            <Textarea className="textbox"
               defaultValue={this.props.curr_post.title}
+              ref={this.focus}
               onBlur={() => this.blur('title')}
               onChange={(event) => this.setState({ locTitle: event.target.value })}
             />
@@ -87,7 +92,7 @@ class Show extends Component {
         );
       } else {
         return (
-          <div onClick={() => this.setState({ titleEditing: !this.state.titleEditing })}
+          <div className="textbox" onClick={() => this.setState({ titleEditing: !this.state.titleEditing })}
             dangerouslySetInnerHTML={{ __html: marked(this.props.curr_post.title || '') }}
           />
         );
@@ -102,8 +107,9 @@ class Show extends Component {
       if (this.state.tagsEditing) {
         return (
           <div>
-            <Textarea
+            <Textarea className="textbox"
               defaultValue={this.props.curr_post.tags}
+              ref={this.focus}
               onBlur={() => this.blur('tags')}
               onChange={(event) => this.setState({ locTags: event.target.value })}
             />
@@ -111,7 +117,7 @@ class Show extends Component {
         );
       } else {
         return (
-          <div onClick={() => this.setState({ tagsEditing: !this.state.tagsEditing })}
+          <div className="textbox" onClick={() => this.setState({ tagsEditing: !this.state.tagsEditing })}
             dangerouslySetInnerHTML={{ __html: marked(this.props.curr_post.tags || '') }}
           />
         );
@@ -126,8 +132,9 @@ class Show extends Component {
       if (this.state.contentEditing) {
         return (
           <div>
-            <Textarea
+            <Textarea className="textbox"
               defaultValue={this.props.curr_post.content}
+              ref={this.focus}
               onBlur={() => this.blur('content')}
               onChange={(event) => this.setState({ locContent: event.target.value })}
             />
@@ -135,7 +142,7 @@ class Show extends Component {
         );
       } else {
         return (
-          <div onClick={() => this.setState({ contentEditing: !this.state.contentEditing })}
+          <div className="textbox" onClick={() => this.setState({ contentEditing: !this.state.contentEditing })}
             dangerouslySetInnerHTML={{ __html: marked(this.props.curr_post.content || '') }}
           />
         );
@@ -149,9 +156,9 @@ class Show extends Component {
     return (
       <div className="show">
         <div className="showHeader">
-          <Link to="/"><span>back to index page</span></Link>
+          <Link to="/"><span><i className="fa fa-arrow-left" aria-hidden="true"></i>back to index page</span></Link>
           <button onClick={() => this.props.deletePost(this.props.params.id)}>
-            delete
+            <i className="fa fa-trash-o" aria-hidden="true"></i>delete
           </button>
         </div>
         <div className="showText">

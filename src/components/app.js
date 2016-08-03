@@ -9,9 +9,12 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div id="mainContainer">
         <NavBar />
-        {this.props.children}
+        <div id="childContainer">
+          {this.props.children}
+        </div>
+        <footer>Ahsan Azim</footer>
       </div>
     );
   }

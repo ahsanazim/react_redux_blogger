@@ -1,15 +1,26 @@
-body {
+$background-color: white;
+$header-text-color: black;
+
+html, body, #main, #mainContainer {
   font-family: 'Oswald', sans-serif;
   color: rgb(10%, 10%, 10%);
   background: white;
-  margin: 50px;
-  margin-left: 0px;
-  margin-right: 0px;
   font-size: 16px;
+  background-color: $background-color;
+  background-size: cover;
+  height: 100%;
+  margin:0;
+  padding:0;
+}
+
+#mainContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
 }
 
 a {
-  color: black;
+  color: $header-text-color;
   text-decoration: none;
   border: none;
 }
@@ -27,65 +38,110 @@ a:hover {
     background-color: white;
 }
 
+a:active {
+    text-decoration: none;
+}
+
 nav {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  align-items: baseline;
-  background: white;
+  align-items: flex-end;
+  background-color: $background-color;
   list-style-type: none;
   margin-bottom: 10px;
   font-size: 50px;
-  border-bottom: solid black 10px;
+  border-bottom: solid $header-text-color 10px;
+  box-sizing: border-box;
+  overflow: auto;
+  min-height: 178px;
   * {
-    padding-bottom: 50px;
     position: relative;
     margin-right: 30px;
+    margin-bottom: 0px;
+  }
+  li {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: auto
+  }
+  li {
+    a {
+      line-height: normal;
+    }
+    a:hover {
+      color: $header-text-color;
+      background-color: $background-color;
+      text-transform: uppercase;
+      transition: all 0.5s;
+    }
   }
   li:first-child {
     font-size: 120px;
     margin-left: 70px;
-  }
-
-  a:hover {
-    border-bottom: double white 10px;
-    color: white;
-    background-color: black;
-  }
-
-  a:active {
+    min-height: inherit;
+    a {
+      min-height: inherit;
+      line-height: 178px;
+      color: $header-text-color;
+    }
+    a:hover {
       text-decoration: none;
+      color: $header-text-color;
+      background-color: $background-color;
+      text-transform: none;
+    }
   }
+
 }
 
 #indexPostList {
-  background: darken(white, 10%);
+  background: $background-color;
   padding: 10px;
   height: 100%;
   width: 100%;
   background-size: cover;
-
+  display: flex;
+  justify-content: space-between;
+  flex-flow: column nowrap;
   li:first-child {
-    margin-top: 70px;
+    margin-top: 30px;
   }
 }
 
+#indexPostList a {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 100%;
+  line-height: 18px;
+  min-height: 18px;
+}
 
 #indexPostList li {
-  font-family: 'Lora', serif;
   padding: 8px;
   list-style-type: none;
   color: black;
-  border: outset white;
+  border: outset black;
   border-width: 2px 2px 2px 2px;
   margin: 3px 3px;
-  background-color: white;
-  margin: 8px;
+  background-color: $background-color;
+  margin: 16px;
   opacity:0.5;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
 }
 
 #indexPostList li:hover {
   opacity: 1;
+  transition: opacity 0.5s;
+}
+
+#indexPostList li span:first-child:hover {
+  text-transform: uppercase;
 }
 
 
@@ -103,19 +159,67 @@ nav {
 }
 
 .show {
-  font-family: 'Lora', serif;
+  font-family: 'Oswald', sans-serif;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 40px;
   display: flex;
   flex-flow: column nowrap;
+  height: 100%;
   .showHeader {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 20px;
+    align-items: center;
+    span * {
+      padding: 20px;
+    }
+    *:hover {
+      text-transform: uppercase;
+    }
+    button {
+      border: none;
+      background-color: inherit;
+      font-size: inherit;
+      font-family: inherit;
+      * {
+        padding: 20px;
+      }
+    }
+    button:active {
+      text-decoration: uppercase underline;
+    }
   }
   .showText {
     display: flex;
     flex-flow: column nowrap;
-    .textItem {
-
+    justify-content: space-between;
+    flex-grow: 1;
+    margin-bottom: 20px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    .textSection {
+      border: solid 2px black;
+      .textbox {
+        width:100%;
+        height: 100%;
+        padding: 10px;
+      }
+      .textbox:focus {
+        outline: none;
+      }
+    }
+    .textSection:last-child {
+      flex-grow: 0.8;
     }
   }
+}
+
+
+footer {
+  margin-top: auto;
+  background-color: black;
+  color: white;
+  text-align: center;
 }
