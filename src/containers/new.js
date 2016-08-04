@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { createPost } from '../actions/index.js';
+import Textarea from 'react-textarea-autosize';
 
 
 class New extends Component {
@@ -31,9 +32,9 @@ class New extends Component {
     return (
       <div className="new">
         <div className="textEntry">
-          <input onChange={this.onTitleChange} value={this.state.title} placeholder={"title"} />
-          <input onChange={this.onTagsChange} value={this.state.tags} placeholder={"tags"} />
-          <input onChange={this.onContentChange} value={this.state.content} placeholder={"content"} />
+          <input className="notContent" onChange={this.onTitleChange} value={this.state.title} placeholder={"title"} />
+          <input className="notContent" onChange={this.onTagsChange} value={this.state.tags} placeholder={"tags"} />
+          <Textarea onChange={this.onContentChange} value={this.state.content} placeholder={"content"} />
         </div>
         <div className="buttons">
           <button onClick={() =>

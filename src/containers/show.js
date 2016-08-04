@@ -82,7 +82,7 @@ class Show extends Component {
       if (this.state.titleEditing) {
         return (
           <div>
-            <Textarea className="textbox"
+            <input className="textbox inputBox"
               defaultValue={this.props.curr_post.title}
               ref={this.focus}
               onBlur={() => this.blur('title')}
@@ -92,7 +92,7 @@ class Show extends Component {
         );
       } else {
         return (
-          <div className="textbox" onClick={() => this.setState({ titleEditing: !this.state.titleEditing })}
+          <div className="textbox inputBox" onClick={() => this.setState({ titleEditing: !this.state.titleEditing })}
             dangerouslySetInnerHTML={{ __html: marked(this.props.curr_post.title || '') }}
           />
         );
@@ -107,7 +107,7 @@ class Show extends Component {
       if (this.state.tagsEditing) {
         return (
           <div>
-            <Textarea className="textbox"
+            <input className="textbox inputBox"
               defaultValue={this.props.curr_post.tags}
               ref={this.focus}
               onBlur={() => this.blur('tags')}
@@ -117,7 +117,7 @@ class Show extends Component {
         );
       } else {
         return (
-          <div className="textbox" onClick={() => this.setState({ tagsEditing: !this.state.tagsEditing })}
+          <div className="textbox inputBox" onClick={() => this.setState({ tagsEditing: !this.state.tagsEditing })}
             dangerouslySetInnerHTML={{ __html: marked(this.props.curr_post.tags || '') }}
           />
         );

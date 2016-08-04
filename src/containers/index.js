@@ -19,7 +19,7 @@ class Index extends Component {
     if (this.props.posts != null) {
       return this.props.posts.map((post) => {
         return (<li key={post.id}><Link to={`posts/${post.id}`}>
-          <span>{post.title}</span><span>{post.tags}</span></Link></li>);
+          <span>{post.title}</span><span id="mainTags">{post.tags}</span></Link></li>);
       });
     } else {
       return <div></div>;
