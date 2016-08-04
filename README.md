@@ -1,1 +1,1 @@
-# js-starter with react react-router babel sass and eslint
+deployed at `bloggr-redux.surge.sh`
