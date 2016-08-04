@@ -19,7 +19,7 @@ export function fetchPosts() {
       dispatch({ type: 'FETCH_POSTS', payload: { posts: response.data } });
     })
     .catch(error => {
-
+      console.log(error);
     });
   };
 }
@@ -31,6 +31,7 @@ export function fetchPost(id) {
       dispatch({ type: 'FETCH_POST', payload: { post: response.data } });
     })
     .catch(error => {
+      console.log(error);
     });
   };
 }
@@ -42,7 +43,7 @@ export function createPost(props) {
       browserHistory.push('/');
     })
     .catch(error => {
-
+      console.log(error);
     });
   };
 }
@@ -54,7 +55,7 @@ export function updatePost(id, post) {
       dispatch(fetchPost(id));
     })
     .catch(error => {
-
+      console.log(error);
     });
   };
 }
@@ -66,7 +67,7 @@ export function deletePost(id) {
       browserHistory.push('/');
     })
     .catch(error => {
-
+      console.log(error);
     });
   };
 }
