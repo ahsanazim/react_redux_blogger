@@ -12,11 +12,12 @@ export const ActionTypes = {
 // const ROOT_URL = 'https://cs52-blog.herokuapp.com/api';
 // const ROOT_URL = 'http://localhost:9090/api';
 const ROOT_URL = 'https://bloggredux.herokuapp.com';
-const API_KEY = '?key=a_azim';
+// const API_KEY = '?key=a_azim';
 
 export function fetchPosts() {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/posts${API_KEY}`)
+    // axios.get(`${ROOT_URL}/posts${API_KEY}`)
+    axios.get(`${ROOT_URL}/posts`)
     .then(response => {
       dispatch({ type: 'FETCH_POSTS', payload: { posts: response.data } });
     })
@@ -28,7 +29,8 @@ export function fetchPosts() {
 
 export function fetchPost(id) {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`)
+    // axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`)
+    axios.get(`${ROOT_URL}/posts/${id}`)
     .then(response => {
       dispatch({ type: 'FETCH_POST', payload: { post: response.data } });
     })
@@ -40,7 +42,8 @@ export function fetchPost(id) {
 
 export function createPost(props) {
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/posts/${API_KEY}`, props)
+    // axios.post(`${ROOT_URL}/posts/${API_KEY}`, props)
+    axios.post(`${ROOT_URL}/posts`, props)
     .then(response => {
       browserHistory.push('/');
     })
@@ -52,7 +55,8 @@ export function createPost(props) {
 
 export function updatePost(id, post) {
   return (dispatch) => {
-    axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, post)
+    // axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, post)
+    axios.put(`${ROOT_URL}/posts/${id}`, post)
     .then(response => {
       dispatch(fetchPost(id));
     })
@@ -64,7 +68,8 @@ export function updatePost(id, post) {
 
 export function deletePost(id) {
   return (dispatch) => {
-    axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`)
+    // axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`)
+    axios.delete(`${ROOT_URL}/posts/${id}`)
     .then(response => {
       browserHistory.push('/');
     })
