@@ -32,7 +32,6 @@ export function fetchPost(id) {
     // axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`)
     axios.get(`${ROOT_URL}/posts/${id}`)
     .then(response => {
-      console.log(response.data);
       dispatch({ type: 'FETCH_POST', payload: { post: response.data } });
     })
     .catch(error => {
