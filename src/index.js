@@ -7,11 +7,17 @@ import routes from './routes';
 import thunk from 'redux-thunk';
 import './style.scss';
 import reducers from './reducers';
+import { ActionTypes } from './actions/index.js';
 
 const store = createStore(reducers, {}, compose(
   applyMiddleware(thunk),
   window.devToolsExtension ? window.devToolsExtension() : f => f
 ));
+
+const token = localStorage.getItem('token');
+if (token) {
+  store.dispatch({ type: ActionTypes.AUTH_USER });
+}
 
 // entry point that just renders app
 // could be used for routing at some point
