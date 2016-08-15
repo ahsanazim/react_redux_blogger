@@ -4,9 +4,6 @@ import { browserHistory } from 'react-router';
 export const ActionTypes = {
   FETCH_POSTS: 'FETCH_POSTS',
   FETCH_POST: 'FETCH_POST',
-  // CREATE_POST: 'CREATE_POST',
-  // UPDATE_POST: 'UPDATE_POST',
-  // DELETE_POST: 'DELETE_POST',
   AUTH_USER: 'AUTH_USER',
   DEAUTH_USER: 'DEAUTH_USER',
   AUTH_ERROR: 'AUTH_ERROR',
@@ -32,7 +29,6 @@ export function fetchPosts() {
 
 export function fetchPost(id) {
   return (dispatch) => {
-    // axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`)
     axios.get(`${ROOT_URL}/posts/${id}`)
     .then(response => {
       dispatch({ type: 'FETCH_POST', payload: { post: response.data } });
@@ -46,8 +42,7 @@ export function fetchPost(id) {
 // note: props = post
 export function createPost(props) {
   return (dispatch) => {
-    // axios.post(`${ROOT_URL}/posts/${API_KEY}`, props)
-    // axios.post(`${ROOT_URL}/posts`, props)
+    console.log(localStorage.getItem('token'));
     axios.post(`${ROOT_URL}/posts`, props, { headers: { authorization: localStorage.getItem('token') } })
     .then(response => {
       browserHistory.push('/');
@@ -60,8 +55,6 @@ export function createPost(props) {
 
 export function updatePost(id, post) {
   return (dispatch) => {
-    // axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, post)
-    // axios.put(`${ROOT_URL}/posts/${id}`, post)
     axios.put(`${ROOT_URL}/posts/${id}`, post, { headers: { authorization: localStorage.getItem('token') } })
     .then(response => {
       dispatch(fetchPost(id));
@@ -74,8 +67,6 @@ export function updatePost(id, post) {
 
 export function deletePost(id) {
   return (dispatch) => {
-    // axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`)
-    // axios.delete(`${ROOT_URL}/posts/${id}`);
     axios.delete(`${ROOT_URL}/posts/${id}`, { headers: { authorization: localStorage.getItem('token') } })
     .then(response => {
       browserHistory.push('/');
@@ -102,12 +93,14 @@ export function authError(error) {
 //  dispatch({ type: ActionTypes.AUTH_USER });
 //  localStorage.setItem('token', response.data.token);
 // on error should dispatch(authError(`Sign In Failed: ${error.response.data}`));
-export function signinUser({ email, password }) {
+export function signinUser({ email, password, username }) {
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/signin`, { email, password })
+    axios.post(`${ROOT_URL}/signin`, { email, password, username })
     .then(response => {
       dispatch({ type: ActionTypes.AUTH_USER });
       localStorage.setItem('token', response.data.token);
+      console.log('token: ');
+      console.log(response.data.token);
     })
     .catch(error => {
       dispatch(authError(`Sign In Failed: ${error.response.data}`));
@@ -122,12 +115,16 @@ export function signinUser({ email, password }) {
 //  dispatch({ type: ActionTypes.AUTH_USER });
 //  localStorage.setItem('token', response.data.token);
 // on error should dispatch(authError(`Sign Up Failed: ${error.response.data}`));
-export function signupUser({ email, password }) {
+export function signupUser({ email, password, username }) {
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/signup`, { email, password })
+    console.log(`signing up ${username}`);
+    axios.post(`${ROOT_URL}/signup`, { email, password, username })
     .then(response => {
       dispatch({ type: ActionTypes.AUTH_USER });
       localStorage.setItem('token', response.data.token);
+      console.log('token: ');
+      console.log(response.data);
+      console.log(response.data.token);
     })
     .catch(error => {
       dispatch(authError(`Sign Up Failed: ${error.response.data}`));
