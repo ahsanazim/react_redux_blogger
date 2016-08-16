@@ -9,6 +9,7 @@ export const ActionTypes = {
   AUTH_ERROR: 'AUTH_ERROR',
 };
 
+// const ROOT_URL = 'http://dartmouthbot.herokuapp.com/api';
 // const ROOT_URL = 'https://cs52-blog.herokuapp.com/api';
 // const ROOT_URL = 'http://localhost:9090/api';
 // const ROOT_URL = 'https://bloggredux.herokuapp.com/api';
