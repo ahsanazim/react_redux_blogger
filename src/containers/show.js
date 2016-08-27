@@ -153,6 +153,7 @@ class Show extends Component {
   }
 
   render() {
+    const imgURL = (this.props.curr_post && this.props.curr_post.image) ? this.props.curr_post.image : 'http://www.patriotenergygroup.com/images2/tba.png';
     return (
       <div className="show">
         <div className="showHeader">
@@ -162,6 +163,7 @@ class Show extends Component {
           </button>
         </div>
         <div className="showText">
+          <img src={imgURL} role="presentation" />
           <div className="textSection">{this.renderTitle()}</div>
           <div className="textSection">{this.renderTags()}</div>
           <div className="textSection">{this.renderContent()}</div>

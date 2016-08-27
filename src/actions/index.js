@@ -36,11 +36,34 @@ export function fetchPost(id) {
   };
 }
 
+function uploadImage(file, id) {
+  axios.post(`${ROOT_URL}/images`, { filename: file.name, filetype: file.type, id })
+  .then(response => {
+    const signedUrl = response.data.requestUrl;
+
+    const options = {
+      headers: {
+        'Content-Type': file.type,
+      },
+    };
+    axios.put(signedUrl, file, options).then(() => {
+      console.log('Success uploading image');
+    }).catch(error => {
+      console.log(error);
+    });
+  }).catch(error => {
+    console.log(error);
+  });
+}
+
 // note: props = post
-export function createPost(props) {
+export function createPost(props, file) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/posts`, props, { headers: { authorization: localStorage.getItem('token') } })
     .then(response => {
+      if (file) {
+        uploadImage(file, response.data._id);
+      }
       browserHistory.push('/');
     })
     .catch(error => {
@@ -49,10 +72,13 @@ export function createPost(props) {
   };
 }
 
-export function updatePost(id, post) {
+export function updatePost(id, post, file) {
   return (dispatch) => {
     axios.put(`${ROOT_URL}/posts/${id}`, post, { headers: { authorization: localStorage.getItem('token') } })
     .then(response => {
+      if (file) {
+        uploadImage(file, response.data._id);
+      }
       dispatch(fetchPost(id));
     })
     .catch(error => {
