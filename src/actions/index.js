@@ -9,16 +9,11 @@ export const ActionTypes = {
   AUTH_ERROR: 'AUTH_ERROR',
 };
 
-// const ROOT_URL = 'http://dartmouthbot.herokuapp.com/api';
-// const ROOT_URL = 'https://cs52-blog.herokuapp.com/api';
 // const ROOT_URL = 'http://localhost:9090/api';
-// const ROOT_URL = 'https://bloggredux.herokuapp.com/api';
-const ROOT_URL = 'https://bloggrredux.herokuapp.com/api';
-// const API_KEY = '?key=a_azim';
+const ROOT_URL = 'http://bloggrupgraded.herokuapp.com/api';
 
 export function fetchPosts() {
   return (dispatch) => {
-    // axios.get(`${ROOT_URL}/posts${API_KEY}`)
     axios.get(`${ROOT_URL}/posts`)
     .then(response => {
       dispatch({ type: 'FETCH_POSTS', payload: { posts: response.data } });
@@ -44,7 +39,6 @@ export function fetchPost(id) {
 // note: props = post
 export function createPost(props) {
   return (dispatch) => {
-    console.log(localStorage.getItem('token'));
     axios.post(`${ROOT_URL}/posts`, props, { headers: { authorization: localStorage.getItem('token') } })
     .then(response => {
       browserHistory.push('/');
@@ -101,8 +95,6 @@ export function signinUser({ email, password, username }) {
     .then(response => {
       dispatch({ type: ActionTypes.AUTH_USER });
       localStorage.setItem('token', response.data.token);
-      console.log('token: ');
-      console.log(response.data.token);
     })
     .catch(error => {
       dispatch(authError(`Sign In Failed: ${error.response.data}`));
@@ -119,14 +111,10 @@ export function signinUser({ email, password, username }) {
 // on error should dispatch(authError(`Sign Up Failed: ${error.response.data}`));
 export function signupUser({ email, password, username }) {
   return (dispatch) => {
-    console.log(`signing up ${username}`);
     axios.post(`${ROOT_URL}/signup`, { email, password, username })
     .then(response => {
       dispatch({ type: ActionTypes.AUTH_USER });
       localStorage.setItem('token', response.data.token);
-      console.log('token: ');
-      console.log(response.data);
-      console.log(response.data.token);
     })
     .catch(error => {
       dispatch(authError(`Sign Up Failed: ${error.response.data}`));
@@ -142,5 +130,17 @@ export function signoutUser() {
     localStorage.removeItem('token');
     dispatch({ type: ActionTypes.DEAUTH_USER });
     browserHistory.push('/');
+  };
+}
+
+export function searchPosts(query) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/search/${query}`)
+    .then(response => {
+      dispatch({ type: 'FETCH_POSTS', payload: { posts: response.data } });
+    })
+    .catch(error => {
+      console.log(error);
+    });
   };
 }
