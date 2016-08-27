@@ -48,7 +48,7 @@ class Show extends Component {
     }
 
     this.props.updatePost(this.props.params.id,
-      { title: titleText, tags: tagsText, content: contentText }
+      { title: titleText, tags: tagsText, content: contentText, image: this.props.curr_post.image }
     );
   }
 
