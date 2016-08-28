@@ -46,8 +46,7 @@ export function fetchPosts() {
       dispatch(removeError());
     })
     .catch(error => {
-      dispatch(reportError(`Fetching posts failed (${error.message}):
-                          ${error.response.data}`));
+      dispatch(reportError(`Fetching posts failed (${error.message})`));
     });
   };
 }
@@ -60,8 +59,7 @@ export function fetchPost(id) {
       dispatch(removeError());
     })
     .catch(error => {
-      dispatch(reportError(`Fetching post failed (${error.message}):
-                            ${error.response.data}`));
+      dispatch(reportError(`Fetching post failed (${error.message})`));
     });
   };
 }
@@ -98,7 +96,7 @@ export function createPost(props, file) {
       browserHistory.push('/');
     })
     .catch(error => {
-      dispatch(reportError(`Create failed (${error.message}): ${error.response.data}`));
+      dispatch(reportError(`Create failed (${error.message})`));
     });
   };
 }
@@ -114,7 +112,7 @@ export function updatePost(id, post, file) {
       dispatch(removeError());
     })
     .catch(error => {
-      dispatch(reportError(`Update failed (${error.message}): ${error.response.data}`));
+      dispatch(reportError(`Update failed (${error.message})`));
     });
   };
 }
@@ -127,7 +125,7 @@ export function deletePost(id) {
       browserHistory.push('/');
     })
     .catch(error => {
-      dispatch(reportError(`Deletion failed (${error.message}): ${error.response.data}`));
+      dispatch(reportError(`Deletion failed (${error.message})`));
     });
   };
 }
@@ -145,9 +143,11 @@ export function signinUser({ email, password, username }) {
     .then(response => {
       dispatch({ type: ActionTypes.AUTH_USER });
       localStorage.setItem('token', response.data.token);
+      dispatch(removeError());
     })
     .catch(error => {
       dispatch(authError(`Sign In Failed: ${error.response.data}`));
+      dispatch(reportError(`Sign In Failed: ${error.response.data}`));
     });
   };
 }
@@ -165,9 +165,11 @@ export function signupUser({ email, password, username }) {
     .then(response => {
       dispatch({ type: ActionTypes.AUTH_USER });
       localStorage.setItem('token', response.data.token);
+      dispatch(removeError());
     })
     .catch(error => {
       dispatch(authError(`Sign Up Failed: ${error.response.data}`));
+      dispatch(reportError(`Sign Up Failed: ${error.response.data}`));
     });
   };
 }
@@ -190,7 +192,7 @@ export function searchPosts(query) {
       dispatch(removeError());
     })
     .catch(error => {
-      dispatch(reportError(`Search failed (${error.message}): ${error.response.data}`));
+      dispatch(reportError(`Search failed (${error.message})`));
     });
   };
 }
