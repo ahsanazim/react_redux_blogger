@@ -138,6 +138,9 @@ class Show extends Component {
               onBlur={() => this.blur('content')}
               onChange={(event) => this.setState({ locContent: event.target.value })}
             />
+            <div className="preview"
+              dangerouslySetInnerHTML={{ __html: marked(this.state.locContent || '') }}
+            />
           </div>
         );
       } else {

@@ -7,19 +7,47 @@ export const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
   DEAUTH_USER: 'DEAUTH_USER',
   AUTH_ERROR: 'AUTH_ERROR',
+  SET_ERROR: 'SET_ERROR',
+  UNSET_ERROR: 'UNSET_ERROR',
 };
 
 // const ROOT_URL = 'http://localhost:9090/api';
 const ROOT_URL = 'http://bloggrupgraded.herokuapp.com/api';
+
+// Error Action Creators
+
+export function reportError(error) {
+  return ({
+    type: ActionTypes.SET_ERROR,
+    message: error,
+  });
+}
+
+export function removeError() {
+  return ({
+    type: ActionTypes.UNSET_ERROR,
+  });
+}
+
+// trigger to deauth if there is error
+// can also use in your error reducer if you have one to display an error message
+export function authError(error) {
+  return {
+    type: ActionTypes.AUTH_ERROR,
+    message: error,
+  };
+}
 
 export function fetchPosts() {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/posts`)
     .then(response => {
       dispatch({ type: 'FETCH_POSTS', payload: { posts: response.data } });
+      dispatch(removeError());
     })
     .catch(error => {
-      console.log(error);
+      dispatch(reportError(`Fetching posts failed (${error.message}):
+                          ${error.response.data}`));
     });
   };
 }
@@ -29,9 +57,11 @@ export function fetchPost(id) {
     axios.get(`${ROOT_URL}/posts/${id}`)
     .then(response => {
       dispatch({ type: 'FETCH_POST', payload: { post: response.data } });
+      dispatch(removeError());
     })
     .catch(error => {
-      console.log(error);
+      dispatch(reportError(`Fetching post failed (${error.message}):
+                            ${error.response.data}`));
     });
   };
 }
@@ -64,10 +94,11 @@ export function createPost(props, file) {
       if (file) {
         uploadImage(file, response.data._id);
       }
+      dispatch(removeError());
       browserHistory.push('/');
     })
     .catch(error => {
-      console.log(error);
+      dispatch(reportError(`Create failed (${error.message}): ${error.response.data}`));
     });
   };
 }
@@ -80,9 +111,10 @@ export function updatePost(id, post, file) {
         uploadImage(file, response.data._id);
       }
       dispatch(fetchPost(id));
+      dispatch(removeError());
     })
     .catch(error => {
-      console.log(error);
+      dispatch(reportError(`Update failed (${error.message}): ${error.response.data}`));
     });
   };
 }
@@ -91,20 +123,12 @@ export function deletePost(id) {
   return (dispatch) => {
     axios.delete(`${ROOT_URL}/posts/${id}`, { headers: { authorization: localStorage.getItem('token') } })
     .then(response => {
+      dispatch(removeError());
       browserHistory.push('/');
     })
     .catch(error => {
-      console.log(error);
+      dispatch(reportError(`Deletion failed (${error.message}): ${error.response.data}`));
     });
-  };
-}
-
-// trigger to deauth if there is error
-// can also use in your error reducer if you have one to display an error message
-export function authError(error) {
-  return {
-    type: ActionTypes.AUTH_ERROR,
-    message: error,
   };
 }
 
@@ -148,7 +172,6 @@ export function signupUser({ email, password, username }) {
   };
 }
 
-
 // deletes token from localstorage
 // and deauths
 export function signoutUser() {
@@ -164,9 +187,10 @@ export function searchPosts(query) {
     axios.get(`${ROOT_URL}/search/${query}`)
     .then(response => {
       dispatch({ type: 'FETCH_POSTS', payload: { posts: response.data } });
+      dispatch(removeError());
     })
     .catch(error => {
-      console.log(error);
+      dispatch(reportError(`Search failed (${error.message}): ${error.response.data}`));
     });
   };
 }
