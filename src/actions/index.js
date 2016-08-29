@@ -9,13 +9,16 @@ export const ActionTypes = {
   AUTH_ERROR: 'AUTH_ERROR',
   SET_ERROR: 'SET_ERROR',
   UNSET_ERROR: 'UNSET_ERROR',
+  SET_USER: 'SET_USER',
+  UNSET_USER: 'UNSET_USER',
 };
 
-// const ROOT_URL = 'http://localhost:9090/api';
-const ROOT_URL = 'http://bloggrupgraded.herokuapp.com/api';
+const ROOT_URL = 'http://localhost:9090/api';
+// const ROOT_URL = 'http://bloggrupgraded.herokuapp.com/api';
 
-// Error Action Creators
+// ACTION CREATORS ============================================================>
 
+// error with message
 export function reportError(error) {
   return ({
     type: ActionTypes.SET_ERROR,
@@ -23,6 +26,7 @@ export function reportError(error) {
   });
 }
 
+// no error, message set to '' in reducer
 export function removeError() {
   return ({
     type: ActionTypes.UNSET_ERROR,
@@ -30,13 +34,33 @@ export function removeError() {
 }
 
 // trigger to deauth if there is error
-// can also use in your error reducer if you have one to display an error message
 export function authError(error) {
   return {
     type: ActionTypes.AUTH_ERROR,
     message: error,
   };
 }
+
+// User Action Creators
+
+export function setUserProfile(username, email, numPosts) {
+  return {
+    type: ActionTypes.SET_USER,
+    username,
+    email,
+    numPosts,
+  };
+}
+
+export function unsetUserProfile() {
+  return {
+    type: ActionTypes.UNSET_USER,
+  };
+}
+
+// dispatch functions with thunk middleware
+
+// POSTS ======================================================================>
 
 export function fetchPosts() {
   return (dispatch) => {
@@ -130,6 +154,8 @@ export function deletePost(id) {
   };
 }
 
+// USER AUTH ==================================================================>
+
 // takes in an object with email and password (minimal user object)
 // returns a thunk method that takes dispatch as an argument (just like our create post method really)
 // does an axios.post on the /signin endpoint
@@ -143,6 +169,7 @@ export function signinUser({ email, password, username }) {
     .then(response => {
       dispatch({ type: ActionTypes.AUTH_USER });
       localStorage.setItem('token', response.data.token);
+      dispatch(setUserProfile(username, '', 0));
       dispatch(removeError());
     })
     .catch(error => {
@@ -165,6 +192,7 @@ export function signupUser({ email, password, username }) {
     .then(response => {
       dispatch({ type: ActionTypes.AUTH_USER });
       localStorage.setItem('token', response.data.token);
+      dispatch(setUserProfile(username, '', 0));
       dispatch(removeError());
     })
     .catch(error => {
@@ -180,9 +208,27 @@ export function signoutUser() {
   return (dispatch) => {
     localStorage.removeItem('token');
     dispatch({ type: ActionTypes.DEAUTH_USER });
+    dispatch(unsetUserProfile());
     browserHistory.push('/');
   };
 }
+
+// USER PROFILE ===============================================================>
+
+export function getUserProfile(username) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/user/${username}`)
+    .then(response => {
+      dispatch(setUserProfile(response.data.username, response.data.email, response.data.numPosts));
+      dispatch(removeError());
+    })
+    .catch(error => {
+      dispatch(reportError(`getting profile Failed: ${error.response.data}`));
+    });
+  };
+}
+
+// SEARCH =====================================================================>
 
 export function searchPosts(query) {
   return (dispatch) => {
