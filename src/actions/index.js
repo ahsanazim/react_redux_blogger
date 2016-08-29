@@ -13,8 +13,8 @@ export const ActionTypes = {
   UNSET_USER: 'UNSET_USER',
 };
 
-const ROOT_URL = 'http://localhost:9090/api';
-// const ROOT_URL = 'http://bloggrupgraded.herokuapp.com/api';
+// const ROOT_URL = 'http://localhost:9090/api';
+const ROOT_URL = 'http://bloggrupgraded.herokuapp.com/api';
 
 // ACTION CREATORS ============================================================>
 
