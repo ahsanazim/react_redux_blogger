@@ -29,25 +29,27 @@ class SignInUp extends Component {
   render() {
     return (
       <div className="new">
-        <div className="textEntry">
-          <input className="notContent" onChange={this.onUNameChange} value={this.state.username} placeholder={"username"} />
-          <input className="notContent" onChange={this.onEmailChange} value={this.state.email} placeholder={"email"} />
-          <input className="notContent" onChange={this.onPassChange} value={this.state.password} placeholder={"password"} />
-        </div>
-        <div className="buttons">
-          <button onClick={() =>
-            this.props.signinUser(
-              { email: this.state.email, password: this.state.password, username: this.state.username }
-            )}>
-            Sign In
-          </button>
-          <button onClick={() =>
-            this.props.signupUser(
-              { email: this.state.email, password: this.state.password, username: this.state.username }
-            )}>
-            Sign Up
-          </button>
-          <Link to="/"><button>Cancel</button></Link>
+        <div>
+          <div className="textEntry">
+            <input className="notContent" onChange={this.onUNameChange} value={this.state.username} placeholder={"username"} />
+            <input className="notContent" onChange={this.onEmailChange} value={this.state.email} placeholder={"email"} />
+            <input className="notContent" type="password" onChange={this.onPassChange} value={this.state.password} placeholder={"password"} />
+          </div>
+          <div className="buttons">
+            <button onClick={() =>
+              this.props.signinUser(
+                { email: this.state.email, password: this.state.password, username: this.state.username }
+              )}>
+              Sign In
+            </button>
+            <button onClick={() =>
+              this.props.signupUser(
+                { email: this.state.email, password: this.state.password, username: this.state.username }
+              )}>
+              Sign Up
+            </button>
+            <Link to="/"><button>Cancel</button></Link>
+          </div>
         </div>
       </div>
     );

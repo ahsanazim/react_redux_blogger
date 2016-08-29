@@ -14,8 +14,8 @@ class User extends Component {
 
   render() {
     return (
-      <div>
-        <div>
+      <div className="userContainer">
+        <div className="statsContainer">
           <div>
             {`Username: ${this.props.username}`}
           </div>
@@ -26,7 +26,7 @@ class User extends Component {
             {`Posts: ${this.props.numPosts}`}
           </div>
         </div>
-        <button onClick={this.props.signoutUser}>
+        <button className="signOutUser" onClick={this.props.signoutUser}>
           Sign Out
         </button>
       </div>

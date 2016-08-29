@@ -11,16 +11,16 @@ const NavBar = (props) => {
       );
     } else {
       return (
-        <li><Link to="/signinup">Sign In / Sign Up</Link></li>
+        <li><Link to="/signinup"><i className="fa fa-sign-in" aria-hidden="true"></i></Link></li>
       );
     }
   }
 
   return (
     <nav>
-      <li><Link to="/">bloggr</Link></li>
-      <li><Link to="/user">Profile</Link></li>
-      <li><Link to="/posts/new"><i className="fa fa-plus-square-o" aria-hidden="true"></i>new post</Link></li>
+      <li><Link to="/"><span className="logo">bloggr</span></Link></li>
+      <li><Link to="/user"><i className="fa fa-user" aria-hidden="true"></i></Link></li>
+      <li><Link to="/posts/new"><i className="fa fa-plus-square-o" aria-hidden="true"></i></Link></li>
       {renderSign()}
     </nav>
   );
@@ -29,6 +29,7 @@ const NavBar = (props) => {
 const mapStateToProps = (state) => (
   {
     authenticated: state.auth.authenticated,
+    username: state.user.username,
   }
 );
 

@@ -62,16 +62,16 @@ class New extends Component {
             <input type="file" name="Upload" id="file-input" onChange={this.handleImage} />
           </div>
           <Textarea onChange={this.onContentChange} value={this.state.content} placeholder={"content"} />
-        </div>
-        <div className="buttons">
-          <button onClick={() =>
-            this.props.createPost(
-              { title: this.state.title, content: this.state.content, tags: this.state.tags },
-              this.state.file
-            )}>
-            Submit
-          </button>
-          <Link to="/"><button>Cancel</button></Link>
+          <div className="buttons">
+            <button onClick={() =>
+              this.props.createPost(
+                { title: this.state.title, content: this.state.content, tags: this.state.tags },
+                this.state.file
+              )}>
+              Submit
+            </button>
+            <Link to="/"><button>Cancel</button></Link>
+          </div>
         </div>
       </div>
     );

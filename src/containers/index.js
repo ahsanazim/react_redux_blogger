@@ -139,12 +139,6 @@ class Index extends Component {
     }
   }
 
-  /*
-  <input type="search" onChange={this.onQueryChange}
-    value={this.state.query} placeholder={"Search"}
-  />
-  */
-
   render() {
     // =========================  Autcomplete
     const { value, suggestions } = this.state;

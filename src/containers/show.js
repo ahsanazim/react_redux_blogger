@@ -82,7 +82,7 @@ class Show extends Component {
       if (this.state.titleEditing) {
         return (
           <div>
-            <input className="textbox inputBox"
+            <input className="textbox inputBox title"
               defaultValue={this.props.curr_post.title}
               ref={this.focus}
               onBlur={() => this.blur('title')}
@@ -92,7 +92,7 @@ class Show extends Component {
         );
       } else {
         return (
-          <div className="textbox inputBox" onClick={() => this.setState({ titleEditing: !this.state.titleEditing })}
+          <div className="textbox inputBox title" onClick={() => this.setState({ titleEditing: !this.state.titleEditing })}
             dangerouslySetInnerHTML={{ __html: marked(this.props.curr_post.title || '') }}
           />
         );
@@ -107,7 +107,7 @@ class Show extends Component {
       if (this.state.tagsEditing) {
         return (
           <div>
-            <input className="textbox inputBox"
+            <input className="textbox inputBox tagsInputBox"
               defaultValue={this.props.curr_post.tags}
               ref={this.focus}
               onBlur={() => this.blur('tags')}
@@ -117,7 +117,7 @@ class Show extends Component {
         );
       } else {
         return (
-          <div className="textbox inputBox" onClick={() => this.setState({ tagsEditing: !this.state.tagsEditing })}
+          <div className="textbox inputBox tagsInputBox" onClick={() => this.setState({ tagsEditing: !this.state.tagsEditing })}
             dangerouslySetInnerHTML={{ __html: marked(this.props.curr_post.tags || '') }}
           />
         );
@@ -131,7 +131,7 @@ class Show extends Component {
     if (this.props.curr_post != null) {
       if (this.state.contentEditing) {
         return (
-          <div>
+          <div className="contentContainer">
             <Textarea className="textbox"
               defaultValue={this.props.curr_post.content}
               ref={this.focus}
@@ -159,17 +159,21 @@ class Show extends Component {
     const imgURL = (this.props.curr_post && this.props.curr_post.image) ? this.props.curr_post.image : 'http://www.patriotenergygroup.com/images2/tba.png';
     return (
       <div className="show">
-        <div className="showHeader">
-          <Link to="/"><span><i className="fa fa-arrow-left" aria-hidden="true"></i>back to index page</span></Link>
-          <button onClick={() => this.props.deletePost(this.props.params.id)}>
-            <i className="fa fa-trash-o" aria-hidden="true"></i>delete
-          </button>
-        </div>
         <div className="showText">
+          <div className="titleHeaderContainer">
+            <div className="textSection titleBox">{this.renderTitle()}</div>
+            <div className="buttonsNTags">
+              <div className="showButtons">
+                <Link to="/"><span><i className="fa fa-arrow-left" aria-hidden="true"></i></span></Link>
+                <button onClick={() => this.props.deletePost(this.props.params.id)}>
+                  <i className="fa fa-trash-o" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div className="textSection tagsContainer">{this.renderTags()}</div>
+            </div>
+          </div>
           <img src={imgURL} role="presentation" />
-          <div className="textSection">{this.renderTitle()}</div>
-          <div className="textSection">{this.renderTags()}</div>
-          <div className="textSection">{this.renderContent()}</div>
+          <div className="textSection contentSection">{this.renderContent()}</div>
         </div>
       </div>
     );

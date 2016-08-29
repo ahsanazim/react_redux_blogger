@@ -1,8 +1,11 @@
 $background-color: white;
 $header-text-color: black;
+$heading-font: 'Questrial', sans-serif;
+$logo-font: 'Questrial', sans-serif;
+$text-font:'Lato', sans-serif;;
 
 html, body, #main, #mainContainer {
-  font-family: 'Oswald', sans-serif;
+  font-family: $heading-font;
   color: rgb(10%, 10%, 10%);
   background: white;
   font-size: 16px;
@@ -18,6 +21,7 @@ html, body, #main, #mainContainer {
   flex-flow: column nowrap;
   justify-content: space-between;
 }
+
 
 a {
   color: $header-text-color;
@@ -51,10 +55,17 @@ nav {
   list-style-type: none;
   margin-bottom: 10px;
   font-size: 50px;
-  border-bottom: solid $header-text-color 10px;
+  border-bottom: solid $header-text-color 5px;
   box-sizing: border-box;
   overflow: auto;
   min-height: 178px;
+  padding-bottom: 10px;
+
+  .logo {
+    font-weight: 100;
+    font-family: $logo-font;
+  }
+
   * {
     position: relative;
     margin-right: 30px;
@@ -125,7 +136,7 @@ nav {
   list-style-type: none;
   color: black;
   border: outset rgba(0,0,0,0.5);
-  border-width: 2px 2px 2px 2px;
+  border-width: 1.5px 1.5px 1.5px 1.5px;
   margin: 3px 3px;
   background-color: $background-color;
   margin: 16px;
@@ -150,12 +161,13 @@ nav {
 
 .new {
   display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-between;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   margin-left: 50px;
   margin-right: 50px;
-  margin-top: 40px;
+  margin-top: 60px;
   font-size: 25px;
   .image-column {
     div {
@@ -180,14 +192,7 @@ nav {
     font-size: 25px;
   }
   .notContent {
-    border-bottom: solid 2px black;
-  }
-  .textEntry *:last-child {
-    border: solid 2px black;
-    min-height: 100px;
-  }
-  .textEntry *:focus {
-    outline: none;
+    border-bottom: solid 1px black;
   }
   .buttons {
     display: flex;
@@ -199,60 +204,79 @@ nav {
       border: none;
       background-color: inherit;
       color: black;
-      font-family: 'Oswald', sans-serif;
+      font-family: $text-font;
+      transition: all 0.5s;
     }
     *:hover {
-      text-transform: uppercase;
+      transition: all 0.5s;
       text-decoration: underline;
     }
   }
 }
 
 .show {
-  font-family: 'Oswald', sans-serif;
+  font-family: $text-font;
   margin-left: 50px;
   margin-right: 50px;
   margin-top: 40px;
   display: flex;
   flex-flow: column nowrap;
   height: 100%;
-  .showHeader {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    font-size: 20px;
-    align-items: center;
-    span * {
-      padding: 20px;
-    }
-    *:hover {
-      text-transform: uppercase;
-    }
-    button {
-      border: none;
-      background-color: inherit;
-      font-size: inherit;
-      font-family: inherit;
-      * {
-        padding: 20px;
-      }
-    }
-    button:active {
-      text-decoration: uppercase underline;
-    }
-  }
+  max-width: 70em;
+  align-self: center;
+  line-height: 1.7;
   .showText {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
     flex-grow: 1;
     margin-bottom: 20px;
-    font-family: 'Lora', serif;
+    font-family: $text-font;
     font-size: 20px;
+    max-width: 70em;
+    .titleHeaderContainer {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      .titleBox {
+      }
+      .buttonsNTags {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        .showButtons {
+          display: flex;
+          flex-flow: column nowrap;
+          justify-content: space-between;
+          a {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+          }
+          button {
+            border: none;
+            background-color: inherit;
+            font-size: inherit;
+          }
+        }
+        .tagsContainer {
+          margin: 0px;
+          margin-bottom: 5px;
+          .tagsInputBox {
+            padding: 0px;
+          }
+        }
+      }
+    }
     .textSection {
-      border-bottom: solid 2px black;
       margin: 10px;
+      .titleBox {
+        margin-bottom: 10px;
+      }
+      .title {
+        font-size: 70px;
+        border-style: none;
+      }
       .textbox {
         width:100%;
         height: 100%;
@@ -278,7 +302,25 @@ nav {
     }
     .textSection:last-child {
       flex-grow: 0.8;
-      border: solid 2px black;
+    }
+    .contentSection {
+      max-width: 70em;
+      justify-content: flex-start;
+      .contentContainer {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+        .textbox {
+          flex-grow: 1;
+          max-width: 50%;
+        }
+        .preview  {
+          flex-grow: 1;
+          max-width: 50%;
+          height: 100;
+          line-height: 1.5em;
+        }
+      }
     }
   }
 }
@@ -312,11 +354,11 @@ footer {
     input {
     	outline: none;
       color: #999;
-      font-family: inherit;
+      font-family: $text-font;
       font-size: 100%;
       border: solid 1px #ccc;
       padding: 9px 10px 9px 32px;
-      width: 150px;
+      width: 170px;
       border-radius: 10em;
       transition: all .5s;
     }
@@ -356,5 +398,36 @@ footer {
   }
   button:hover {
     border-style: solid;
+  }
+}
+
+// transitions
+i, button, .logo, .signOutUser {
+  transition: all 150ms linear;
+}
+i:hover, button:hover, .logo:hover, .signOutUser:hover {
+  color: lighten(black, 50%);
+  text-decoration: none;
+  text-shadow: -1px -1px 0 darken($background-color, 9.5%);
+  transition: all 250ms linear;
+}
+
+.userContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 60px;
+  font-size: 25px;
+  .statsContainer {
+    * {
+      padding: 30px;
+    }
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
   }
 }
