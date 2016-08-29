@@ -11,6 +11,7 @@ export const ActionTypes = {
   UNSET_ERROR: 'UNSET_ERROR',
   SET_USER: 'SET_USER',
   UNSET_USER: 'UNSET_USER',
+  SET_TAGS: 'SET_TAGS',
 };
 
 // const ROOT_URL = 'http://localhost:9090/api';
@@ -58,7 +59,8 @@ export function unsetUserProfile() {
   };
 }
 
-// dispatch functions with thunk middleware
+//                dispatch functions with thunk middleware
+// ============================================================================>
 
 // POSTS ======================================================================>
 
@@ -239,6 +241,21 @@ export function searchPosts(query) {
     })
     .catch(error => {
       dispatch(reportError(`Search failed (${error.message})`));
+    });
+  };
+}
+
+// TAGS =======================================================================>
+
+export function getTags() {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/tags`)
+    .then(response => {
+      dispatch({ type: 'SET_TAGS', tags: response.data });
+      dispatch(removeError());
+    })
+    .catch(error => {
+      dispatch(reportError(`Getting tags failed (${error.message})`));
     });
   };
 }
